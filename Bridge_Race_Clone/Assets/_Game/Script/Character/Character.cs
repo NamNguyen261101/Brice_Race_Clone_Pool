@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : ColorObject
 {
+    #region Params
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask stairLayer;
 
@@ -15,7 +16,7 @@ public class Character : ColorObject
     private string currentAnim;
 
     [HideInInspector] public Stage stage;
-
+    #endregion
 
     public int BrickCount => playerBricks.Count;
 
@@ -28,6 +29,11 @@ public class Character : ColorObject
     //check diem tiep theo xem co phai la ground khong
     //+ tra ve vi tri next do
     //- tra ve vi tri hien tai
+    /// <summary>
+    /// Check ground -> if true then return to direction that moving to -> if wrong return back to your stage
+    /// </summary>
+    /// <param name="nextPoint"></param>
+    /// <returns></returns>
     public Vector3 CheckGround(Vector3 nextPoint)
     {
         RaycastHit hit;
@@ -40,6 +46,9 @@ public class Character : ColorObject
         return TF.position;
     }
 
+    /// <summary>
+    /// Add brick behind character
+    /// </summary>
     public void AddBrick()
     {
         PlayerBrick playerBrick = Instantiate(playerBrickPrefab, brickHolder);
@@ -48,6 +57,9 @@ public class Character : ColorObject
         playerBricks.Add(playerBrick);
     }
 
+    /// <summary>
+    /// Remove brick when destroy
+    /// </summary>
     public void RemoveBrick()
     {
         if (playerBricks.Count > 0)
@@ -58,6 +70,9 @@ public class Character : ColorObject
         }
     }
 
+    /// <summary>
+    /// Clear all brick when start again
+    /// </summary>
     public void ClearBrick()
     {
         for (int i = 0; i < playerBricks.Count; i++)
@@ -83,14 +98,14 @@ public class Character : ColorObject
         }
     }
 
-
+    /// <summary>
+    /// (1) Check color stair -> (2) if same color -> fill it up -> (3) if don't have enough brick + not same color + direction up -> then fill agan 
+    /// </summary>
+    /// <param name="nextPoint"></param>
+    /// <returns></returns>
 
     public bool CanMove(Vector3 nextPoint)
     {
-        //check mau stair
-        //k cung mau -> fill
-        //het gach + k cung mau + huong di len
-
         bool isCanMove = true;
         RaycastHit hit;
 
@@ -113,7 +128,10 @@ public class Character : ColorObject
 
         return isCanMove;
     }
-
+    /// <summary>
+    /// Change animation by trigger
+    /// </summary>
+    /// <param name="animName"></param>
     public void ChangeAnim(string animName)
     {
         if (currentAnim != animName)

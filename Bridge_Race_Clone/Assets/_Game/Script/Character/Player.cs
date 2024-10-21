@@ -6,11 +6,13 @@ public class Player : Character
 {
     [SerializeField] private float speed = 5;
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //open start to gameplay -> chane state
         if (GameManager.Instance.IsState(GameState.Gameplay) )
         {
+            // Input touch joystick
             if (Input.GetMouseButton(0))
             {
 
